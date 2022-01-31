@@ -3,6 +3,8 @@ import React from 'react';
 import appConfig from '../config.json';
 
 export default function ChatPage() {
+    const [mensagem, setMensagem] = React.useState('');
+    const [listaDeMensagens, SeListaDeMensagens] = React.useState([]);
     // Sua lógica vai aqui
 
     // ./Sua lógica vai aqui
@@ -43,8 +45,9 @@ export default function ChatPage() {
                         padding: '16px',
                     }}
                 >
-
                     {/* <MessageList mensagens={[]} /> */}
+
+                    lista de mensagem{listaDeMensagens}
 
                     <Box
                         as="form"
@@ -54,6 +57,17 @@ export default function ChatPage() {
                         }}
                     >
                         <TextField
+                            value= {mensagem}
+                            onChange = { (event) => {
+                                const valor = event.target.value;
+                                setMensagem(valor);
+                            }}
+                            onKeyPress={ (event) => {
+                                if (event.key === 'Enter') {
+                                    console.log(event)
+                                    setMensagem('');
+                                }
+                            }}
                             placeholder="Insira sua mensagem aqui..."
                             type="textarea"
                             styleSheet={{
