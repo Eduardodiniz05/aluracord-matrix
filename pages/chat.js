@@ -4,10 +4,24 @@ import appConfig from '../config.json';
 
 export default function ChatPage() {
     const [mensagem, setMensagem] = React.useState('');
-    const [listaDeMensagens, SeListaDeMensagens] = React.useState([]);
+    const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
     // Sua lógica vai aqui
 
     // ./Sua lógica vai aqui
+
+    function handleNovaMensagem(novaMensagem) {
+        const mensagem = {
+            id: listaDeMensagens.length + 1,
+            de: 'Eduardo Diniz',
+            texto: novaMensagem,
+        };
+        //chamada de um Backend
+        setListaDeMensagens([
+            mensagem,
+            ...listaDeMensagens,
+        ]);
+        setMensagem('');
+    }
     return (
         <Box
             styleSheet={{
@@ -45,9 +59,15 @@ export default function ChatPage() {
                         padding: '16px',
                     }}
                 >
-                    {/* <MessageList mensagens={[]} /> */}
+                    <MessageList mensagens={listaDeMensagens} />
 
-                    lista de mensagem{listaDeMensagens}
+                    {/* {listaDeMensagens.map ((mensagemAtual) => {
+                       return(
+                             <li key={mensagemAtual.id}>
+                                 {mensagemAtual.de}: {mensagemAtual.texto}
+                             </li>
+                       )
+                   })} */}
 
                     <Box
                         as="form"
@@ -57,15 +77,15 @@ export default function ChatPage() {
                         }}
                     >
                         <TextField
-                            value= {mensagem}
-                            onChange = { (event) => {
+                            value={mensagem}
+                            onChange={(event) => {
                                 const valor = event.target.value;
                                 setMensagem(valor);
                             }}
-                            onKeyPress={ (event) => {
+                            onKeyPress={(event) => {
                                 if (event.key === 'Enter') {
-                                    console.log(event)
-                                    setMensagem('');
+                                    event.preventDefault();
+                                    handleNovaMensagem(mensagem);
                                 }
                             }}
                             placeholder="Insira sua mensagem aqui..."
@@ -107,7 +127,7 @@ function Header() {
 }
 
 function MessageList(props) {
-    console.log('MessageList', props);
+    console.log(props.listaDeMensagens);
     return (
         <Box
             tag="ul"
@@ -121,49 +141,55 @@ function MessageList(props) {
             }}
         >
 
-            <Text
-                key={mensagem.id}
-                tag="li"
-                styleSheet={{
-                    borderRadius: '5px',
-                    padding: '6px',
-                    marginBottom: '12px',
-                    hover: {
-                        backgroundColor: appConfig.theme.colors.neutrals[700],
-                    }
-                }}
-            >
-                <Box
-                    styleSheet={{
-                        marginBottom: '8px',
-                    }}
-                >
-                    <Image
-                        styleSheet={{
-                            width: '20px',
-                            height: '20px',
-                            borderRadius: '50%',
-                            display: 'inline-block',
-                            marginRight: '8px',
-                        }}
-                        src={`https://github.com/vanessametonini.png`}
-                    />
-                    <Text tag="strong">
-                        {mensagem.de}
-                    </Text>
+            {props.mensagens.map((mensagem) => {
+                return (
                     <Text
+                        key={mensagem.id}
+                        tag="li"
                         styleSheet={{
-                            fontSize: '10px',
-                            marginLeft: '8px',
-                            color: appConfig.theme.colors.neutrals[300],
+                            borderRadius: '5px',
+                            padding: '6px',
+                            marginBottom: '12px',
+                            hover: {
+                                backgroundColor: appConfig.theme.colors.neutrals[700],
+                            }
                         }}
-                        tag="span"
                     >
-                        {(new Date().toLocaleDateString())}
+                        <Box
+                            styleSheet={{
+                                marginBottom: '8px',
+                            }}
+                        >
+                            <Image
+                                styleSheet={{
+                                    width: '20px',
+                                    height: '20px',
+                                    borderRadius: '50%',
+                                    display: 'inline-block',
+                                    marginRight: '8px',
+                                }}
+                                src={`https://github.com/vanessametonini.png`}
+                            />
+                            <Text tag="strong">
+                                {mensagem.de}
+                            </Text>
+                            <Text
+                                styleSheet={{
+                                    fontSize: '10px',
+                                    marginLeft: '8px',
+                                    color: appConfig.theme.colors.neutrals[300],
+                                }}
+                                tag="span"
+                            >
+                                {(new Date().toLocaleDateString())}
+                            </Text>
+                        </Box>
+                        {mensagem.texto}
                     </Text>
-                </Box>
-                {mensagem.texto}
-            </Text>
+                )
+            })}
+
+
         </Box>
     )
 }

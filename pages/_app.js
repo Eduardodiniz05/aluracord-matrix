@@ -29,7 +29,6 @@ function GlobalStyle() {
 
 // import App from 'next/app'
 export default function MyApp({ Component, pageProps }) {
-    console.log('Roda em todas as paginas')
      return(
     <>
         <GlobalStyle />
