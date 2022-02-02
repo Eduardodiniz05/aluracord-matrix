@@ -2,6 +2,10 @@ import { Box, Text, TextField, Image, Button } from '@skynexui/components';
 import React from 'react';
 import appConfig from '../config.json';
 
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTY0MzgyNzg2NiwiZXhwIjoxOTU5NDAzODY2fQ.DbzAuEAapD-Nvp8KjR8swKPb9Sr6ifb2LPTjqq077yI'
+
+const SUPABASE_URL = 'https://byxzdmouukkblgmegxzv.supabase.co'
+
 export default function ChatPage() {
     const [mensagem, setMensagem] = React.useState('');
     const [listaDeMensagens, setListaDeMensagens] = React.useState([]);
@@ -25,10 +29,14 @@ export default function ChatPage() {
     return (
         <Box
             styleSheet={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
                 backgroundColor: appConfig.theme.colors.secondary[300],
                 backgroundImage: `url(https://virtualbackgrounds.site/wp-content/uploads/2020/09/eiffel-tower-seen-from-the-seine-river.jpg)`,
-                backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
+                backgroundRepeat: 'no-repeat', 
+                backgroundSize: 'cover', 
+                backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
             }}
         >
@@ -111,7 +119,11 @@ export default function ChatPage() {
 function Header() {
     return (
         <>
-            <Box styleSheet={{ width: '100%', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
+            <Box styleSheet={{ width: '100%', 
+            marginBottom: '16px', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'space-between' }} >
                 <Text variant='heading5'>
                     Chat
                 </Text>
@@ -186,7 +198,7 @@ function MessageList(props) {
                         </Box>
                         {mensagem.texto}
                     </Text>
-                )
+                );
             })}
 
 
